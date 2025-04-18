@@ -1,0 +1,24 @@
+services:
+
+  my_sql:
+    build: ./build_images/mysql
+    container_name: my_sql
+    expose:
+      - "3306"
+    networks:
+      - app_network
+
+  spring_app:
+    build: ./build_images/springboot
+    ports:
+      - "8080:8080"
+    container_name: spring_app
+    depends_on:
+      - my_sql
+    networks:
+      - app_network
+
+
+networks:
+  app_network:
+     driver: bridge
